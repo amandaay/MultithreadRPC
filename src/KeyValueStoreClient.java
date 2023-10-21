@@ -26,18 +26,19 @@ public class KeyValueStoreClient {
             String value = "";
             String response = "";
             String prevInput = "";
+            String timestamp = "";
             String[] prepopulate = {"a", "b", "c", "d", "e", "f"};
             for (int i = 0; i < 5; i ++) {
                 System.out.println("PUT " + prepopulate[i] + " " + prepopulate[i + 1]);
                 response = keyValueStore.put(prepopulate[i], prepopulate[i + 1], putCount++);
-                String timestamp = Utils.getCurrentTimestamp();
+                timestamp = Utils.getCurrentTimestamp();
                 System.out.println(timestamp + ", " + response.substring(response.indexOf("*") + 1));
             }
+            System.out.println(timestamp + ", Enter operation:\nPUT <key> <value> or GET <key> or DELETE <key> or SHUTDOWN");
             // perform at least 5 GETs, 5 PUTs, 5 DELETES
             while (true) {
                 // Get the current timestamp
-                String timestamp = Utils.getCurrentTimestamp();
-                System.out.println("Enter PUT <key> <value>, GET <key>, or DELETE <key>");
+                timestamp = Utils.getCurrentTimestamp();
                 String userInput = System.console().readLine();
                 System.out.println(timestamp + ", Sending: " + userInput);
 
@@ -72,7 +73,6 @@ public class KeyValueStoreClient {
                         case "SHUTDOWN" -> {
                             // Allow client to make sure if 5 operators are not done
                             response = keyValueStore.shutdown(getCount, putCount, delCount);
-                            System.out.println(timestamp + ", Enter operation:\nPUT <key> <value> or GET <key> or DELETE <key> or SHUTDOWN");
                         }
                         case "Y" -> {
                             response = keyValueStore.confirmShutdown(prevInput, operation);
