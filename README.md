@@ -20,5 +20,5 @@ One for server and one for client.
 <img width="1176" alt="Screenshot 2023-10-21 at 1 46 05 PM" src="https://github.com/amandaay/MultithreadRPC/assets/58647320/a7d8757b-690f-4e8f-bbcd-5d75bdabe760">
 <img width="1402" alt="Screenshot 2023-10-21 at 1 46 13 PM" src="https://github.com/amandaay/MultithreadRPC/assets/58647320/c2ae329c-e571-45fd-835e-41a5c28a3e87">
 
-### Note: Executive Summary is attached in a separately
+### Note: Executive Summary is attached separately
 `ExecutiveSummary.md`
