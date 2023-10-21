@@ -1,5 +1,8 @@
 import java.rmi.*;
 
+/**
+ * Interface to extend Remote Procedural Call (RPC)
+ */
 public interface KeyValueStore extends Remote {
     String get(String key, int getCount) throws RemoteException;
     String put(String key, String value, int putCount) throws RemoteException;

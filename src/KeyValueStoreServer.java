@@ -3,6 +3,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
 
+/**
+ * KeyValueStoreServer by using rmi to ensure remote procedural call
+ */
 public class KeyValueStoreServer extends UnicastRemoteObject implements KeyValueStore {
     private final KeyValueStoreHelper helper = new KeyValueStoreHelper();
 
@@ -35,6 +38,12 @@ public class KeyValueStoreServer extends UnicastRemoteObject implements KeyValue
         return helper.confirmShutdown(prevInput, confirmation);
     }
 
+    /**
+     * The main method for the KeyValueStoreServer class.
+     * This method sets up an RMI (Remote Method Invocation) server for a key-value store.
+     *
+     * @param args Command-line arguments, where args[0] is the port number on which the server should listen.
+     */
     public static void main(String[] args) {
         try {
             if (args.length != 1) {
@@ -51,6 +60,7 @@ public class KeyValueStoreServer extends UnicastRemoteObject implements KeyValue
             System.out.println("Server is running...");
 
         } catch (RemoteException e) {
+            // Handle any RemoteException that might occur during RMI setup
             e.printStackTrace();
         }
     }

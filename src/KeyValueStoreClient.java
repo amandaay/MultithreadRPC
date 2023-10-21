@@ -1,6 +1,9 @@
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
+/**
+ * KeyValueStoreClient invoking the RMI server
+ */
 public class KeyValueStoreClient {
     public static void main(String[] args) {
         try {
@@ -19,14 +22,9 @@ public class KeyValueStoreClient {
             // Establish connections to the remote KeyValueStore object on the server
             KeyValueStore keyValueStore = (KeyValueStore) registry.lookup("KeyValueStore");
             System.out.println("Enter at least 5 PUTs, 5 GETs, 5 DELETEs operation.\nHere is an example:");
-            int putCount = 0;
-            int getCount = 0;
-            int delCount = 0;
-            String key = "";
-            String value = "";
-            String response = "";
-            String prevInput = "";
-            String timestamp = "";
+            int putCount = 0, getCount = 0, delCount = 0;
+            String key = null, value = null, response = "", prevInput = "", timestamp = "";
+            // to pre-populate the Key-Value store with data and a set of keys
             String[] prepopulate = {"a", "b", "c", "d", "e", "f"};
             for (int i = 0; i < 5; i ++) {
                 System.out.println("PUT " + prepopulate[i] + " " + prepopulate[i + 1]);
@@ -71,11 +69,15 @@ public class KeyValueStoreClient {
                             }
                         }
                         case "SHUTDOWN" -> {
-                            // Allow client to make sure if 5 operators are not done
-                            response = keyValueStore.shutdown(getCount, putCount, delCount);
+                            if (inputTokens.length == 1) {
+                                // Allow client to make sure if 5 operators are not done
+                                response = keyValueStore.shutdown(getCount, putCount, delCount);
+                            }
                         }
                         case "Y" -> {
-                            response = keyValueStore.confirmShutdown(prevInput, operation);
+                            if (inputTokens.length == 1) {
+                                response = keyValueStore.confirmShutdown(prevInput, operation);
+                            }
                         }
                         default -> System.out.println("Received an unknown operation. Try again");
                     }
