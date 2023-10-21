@@ -2,53 +2,57 @@ import java.rmi.*;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class KeyValueStoreServer extends UnicastRemoteObject implements KeyValueStore {
-    private ConcurrentHashMap<String, String> dataStore = new ConcurrentHashMap<>();
+    private final KeyValueStoreHelper helper = new KeyValueStoreHelper();
 
     protected KeyValueStoreServer() throws RemoteException {
         super();
     }
 
     @Override
-    public synchronized String get(String key) throws RemoteException {
-        // Implement the GET operation
-        return null;
+    public synchronized String get(String key, int getCount) throws RemoteException {
+        return helper.get(key, getCount);
     }
 
     @Override
-    public synchronized void put(String key, String value) throws RemoteException {
-        // Implement PUT operation
+    public synchronized String put(String key, String value, int putCount) throws RemoteException {
+        return helper.put(key, value, putCount);
     }
 
     @Override
-    public synchronized void delete(String key) throws RemoteException {
-        // Implement DELETE operation
+    public synchronized String delete(String key, int delCount) throws RemoteException {
+        return helper.delete(key, delCount);
+    }
+
+    @Override
+    public synchronized String shutdown(int getCount, int putCount, int delCount) throws RemoteException {
+        return helper.shutdown(getCount, putCount, delCount);
+    }
+
+    @Override
+    public synchronized String confirmShutdown(String prevInput, String confirmation) throws RemoteException {
+        return helper.confirmShutdown(prevInput, confirmation);
     }
 
     public static void main(String[] args) {
         try {
-            Registry registry = LocateRegistry.createRegistry(8000);
+            if (args.length != 1) {
+                System.err.println("Usage: java KeyValueStoreServer <serverPort>");
+                System.exit(1);
+            }
+            int serverPort = Integer.parseInt(args[0]);
+            // create an RMI registry on the inputted port
+            Registry registry = LocateRegistry.createRegistry(serverPort);
+            // create an instance of KeyValueStoreServer
             KeyValueStoreServer server = new KeyValueStoreServer();
+            // binds the server object to the registry with the name "KeyValueStore"
             registry.rebind("KeyValueStore", server);
             System.out.println("Server is running...");
-            // Create an ExecutorService with a fixed pool of threads to handle incoming client requests
-            // You can adjust the pool size as needed
-             ExecutorService executor = Executors.newFixedThreadPool(10);
-
-            while (true) {
-                // Accept client connections and submit them to the executor
-                // This allows handling multiple client requests concurrently
-                // Runnable clientTask = new ClientHandler(server);
-                // executor.execute(clientTask);
-            }
 
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-
     }
+
 }
