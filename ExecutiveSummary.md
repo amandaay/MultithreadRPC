@@ -2,7 +2,7 @@
 
 ## Assignment Overview
 
-### The assignment overview shows how well you understand the assignment
+### The assignment overview shows how well you understand the assignment.
 
 In this assignment, I had a comprehensive understanding of remote procedure call (RPC) and their role in client-server communication. Specifically, I observed how RPC streamlines the process, involving client can go through client stub, packing the message to be sent to the remote procedural object, then to the RPC runtime to the client OS. Then invokes the server via TCP transport then reaches the server OS then through RPC runtime unmarshals the message then through server skeleton to the server then marshals the message and sends back to the client. In this project, RMI in java handles all of the operation including multithreading. The focus was to transition from the socket-based connections to an RPC-based framework, offering more efficient and structured client-server interactions. First, I adopted an RPC system using Java RMI, then implement multithreading in the server to handle concurrent requests for PUT, GET, and DELETE. Overall, the project goal is to showcase the capabilities of a concurrent RPC-based system to manage a real-world scenario where numerous clients can engage with the server.
 
