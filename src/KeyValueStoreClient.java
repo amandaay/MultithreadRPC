@@ -51,21 +51,27 @@ public class KeyValueStoreClient {
                                 key = inputTokens[1];
                                 response = keyValueStore.get(key, getCount);
                                 getCount = Utils.handleCount(response, getCount, "GETs");
+                            } else {
+                                System.out.println("Make sure there's one key to perform GET operation.");
                             }
                         }
                         case "PUT" -> {
-                            if (inputTokens[1] != null && inputTokens[2] != null && inputTokens.length == 3) {
+                            if (inputTokens.length == 3) {
                                 key = inputTokens[1];
                                 value = inputTokens[2];
                                 response = keyValueStore.put(key, value, putCount);
                                 putCount = Utils.handleCount(response, putCount, "PUTs");
+                            } else {
+                                System.out.println("Make sure there's one key value to perform PUT operation.");
                             }
                         }
                         case "DELETE" -> {
-                            if (inputTokens[1] != null && inputTokens.length == 2) {
+                            if (inputTokens.length == 2) {
                                 key = inputTokens[1];
                                 response = keyValueStore.delete(key, delCount);
                                 delCount = Utils.handleCount(response, delCount, "DELETEs");
+                            } else {
+                                System.out.println("Make sure there's one key to perform DELETE operation.");
                             }
                         }
                         case "SHUTDOWN" -> {
@@ -82,6 +88,7 @@ public class KeyValueStoreClient {
                         default -> System.out.println("Received an unknown operation. Try again");
                     }
                 }
+                System.out.println(timestamp + ", Enter operation:\nPUT <key> <value> or GET <key> or DELETE <key> or SHUTDOWN");
                 int indexCleanResponse = response.indexOf("*");
                 if (indexCleanResponse > 0) {
                     prevInput = response.substring(0, indexCleanResponse);
