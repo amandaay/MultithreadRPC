@@ -1,4 +1,3 @@
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -13,7 +12,7 @@ public class KeyValueStoreHelper {
      * @param getCount to keep track of 5 count or not
      * @return the response statement that we want to return to the client
      */
-    public synchronized String get(String key, int getCount) {
+    public String get(String key, int getCount) {
         System.out.println(Utils.getCurrentTimestamp() + ", Receiving: PUT " + key);
         if (!operation.containsKey(key)) {
             return "Key does not exist.";
@@ -31,7 +30,7 @@ public class KeyValueStoreHelper {
      * @param putCount to keep track of 5 count or not
      * @return the response statement that we want to return to the client
      */
-    public synchronized String put(String key, String value, int putCount) {
+    public String put(String key, String value, int putCount) {
         System.out.println(Utils.getCurrentTimestamp() + ", Receiving: PUT " + key + " " + value);
         if (operation.containsKey(key)) {
             return "Key already exist, try another key.";
@@ -48,7 +47,7 @@ public class KeyValueStoreHelper {
      * @param delCount to keep track of 5 count or not
      * @return the response statement that we want to return to the client
      */
-    public synchronized String delete(String key, int delCount) {
+    public String delete(String key, int delCount) {
         System.out.println(Utils.getCurrentTimestamp() + ", Receiving: DELETE " + key);
         if (!operation.containsKey(key)) {
             return "Key does not exist.\noperations left: " + operation;
@@ -63,7 +62,7 @@ public class KeyValueStoreHelper {
      * Handles shutdown operator
      * @return shutdown request
      */
-    public synchronized String shutdown(int getCount, int putCount, int delCount) {
+    public String shutdown(int getCount, int putCount, int delCount) {
         System.out.println(Utils.getCurrentTimestamp() + ", Receiving: SHUTDOWN");
         if (putCount < 5 || getCount < 5 || delCount < 5) {
             return "SHUTDOWN*You haven't completed at least 5 operator each. Are you sure you want to shutdown? (y/n)";
@@ -75,7 +74,7 @@ public class KeyValueStoreHelper {
      * Handles confirm shutdown operator
      * @return shutdown request
      */
-    public synchronized String confirmShutdown(String prevInput, String confirmation) {
+    public String confirmShutdown(String prevInput, String confirmation) {
         System.out.println(Utils.getCurrentTimestamp() + ", Receiving: SHUTDOWN confirmation");
         if (!prevInput.equalsIgnoreCase("SHUTDOWN") || !confirmation.equalsIgnoreCase("Y")) {
             return "confirmClose*Let's continue";

@@ -14,27 +14,27 @@ public class KeyValueStoreServer extends UnicastRemoteObject implements KeyValue
     }
 
     @Override
-    public synchronized String get(String key, int getCount) throws RemoteException {
+    public String get(String key, int getCount) throws RemoteException {
         return helper.get(key, getCount);
     }
 
     @Override
-    public synchronized String put(String key, String value, int putCount) throws RemoteException {
+    public String put(String key, String value, int putCount) throws RemoteException {
         return helper.put(key, value, putCount);
     }
 
     @Override
-    public synchronized String delete(String key, int delCount) throws RemoteException {
+    public String delete(String key, int delCount) throws RemoteException {
         return helper.delete(key, delCount);
     }
 
     @Override
-    public synchronized String shutdown(int getCount, int putCount, int delCount) throws RemoteException {
+    public String shutdown(int getCount, int putCount, int delCount) throws RemoteException {
         return helper.shutdown(getCount, putCount, delCount);
     }
 
     @Override
-    public synchronized String confirmShutdown(String prevInput, String confirmation) throws RemoteException {
+    public String confirmShutdown(String prevInput, String confirmation) throws RemoteException {
         return helper.confirmShutdown(prevInput, confirmation);
     }
 
